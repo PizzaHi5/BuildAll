@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2022"],
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@chain-skills/core": ["packages/core/src/index.ts"],
+      "@chain-skills/evm": ["packages/evm/src/index.ts"],
+      "@chain-skills/protocols": ["packages/protocols/src/index.ts"],
+      "@chain-skills/protocols/*": ["packages/protocols/src/*/index.ts"],
+      "@chain-skills/chains": ["packages/chains/src/index.ts"],
+      "@chain-skills/skills": ["packages/skills/src/index.ts"]
+    },
+    "types": ["node", "vitest/globals"],
+    "outDir": "dist"
+  },
+  "include": ["packages/**/*.ts", "apps/**/*.ts", "tests/**/*.ts"]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "@chain-skills/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": { "chain-skills": "src/index.ts" }
+}
