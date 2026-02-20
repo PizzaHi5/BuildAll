@@ -1,33 +1,129 @@
-# Chain Skills Pack (implementation build)
+# BuildAll Chain Skills Pack
 
-TypeScript monorepo implementing multi-chain skills with a unified command contract.
+Multi-chain smart-contract skill layer designed for chat-first agents.
 
-## Implemented
-- M1 complete: Core runtime + ERC20 + ERC721 + Chainlink + CLI skeleton
-- M2 complete (baseline): Uniswap v3 quote/swap/poolState + Uniswap v4 capability-gated scaffold
-- M3 baseline: Aave v3 operations, Maker basic DAI/vault operations, OpenSea read-only market data
-- M4 starter adapters: Solana, NEAR, Hedera read primitives
-- Multi-chain EVM support: Ethereum, Base, Arbitrum, Optimism, Polygon
+This repo gives an agent one consistent interface to perform major DeFi/NFT tasks on EVM chains.
 
-See `docs/evm-transaction-playbook.md` for quick transaction templates by functionality and chain.
+## What this enables
 
-## Quickstart
+An agent can route user intent ("swap", "borrow", "check NFT owner", "get oracle price") into executable blockchain calls with deterministic outputs.
+
+### Supported chains
+- Ethereum
+- Base
+- Arbitrum
+- Optimism
+- Polygon
+
+### Supported major functionality
+- **Token standard (fungible):** ERC-20
+- **NFT standard (non-fungible):** ERC-721
+- **DEX (AMM):** Uniswap v3 (v4 scaffolded, write-gated)
+- **Lending:** Aave v3
+- **Stablecoin (crypto-collateralized):** Maker basic vault ops (Ethereum mainnet)
+- **Oracle:** Chainlink feeds
+- **NFT marketplace:** OpenSea read APIs
+
+---
+
+## Architecture flow (end-to-end)
+
+1. User asks in chat (e.g. "swap 100 USDC to WETH on Base").
+2. Agent maps task → command + chain + protocol inputs.
+3. Skill command runs through unified CLI/runtime.
+4. For writes, transaction is simulated first (`simulate=true`).
+5. If valid, signed tx is submitted using configured wallet key.
+6. Standard response is returned:
+   - `ok`
+   - `data` / `error`
+   - `meta` (`chain`, `txHash`, `blockNumber`, `latencyMs`, etc.)
+
+---
+
+## Quick setup
+
 ```bash
 pnpm install
 cp .env.example .env
-pnpm typecheck
-pnpm test
-pnpm lint
 ```
 
-Run a command:
+Fill `.env` for:
+- RPCs (Ethereum/Base/Arbitrum/Optimism/Polygon)
+- `EVM_PRIVATE_KEY` (required for write ops)
+- Optional API keys (OpenSea)
+
+Validate everything:
+
 ```bash
-pnpm exec tsx apps/cli/src/index.ts \
-  --command token.balance \
-  --input '{"chain":"ethereum","token":"0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48","owner":"0x0000000000000000000000000000000000000000"}'
+corepack pnpm typecheck
+corepack pnpm test
+corepack pnpm build
 ```
 
-Result schema:
+---
+
+## Usage patterns
+
+### 1) CLI entrypoint
+
+```bash
+chain-skills -c <command> -i '<json>'
+```
+
+Equivalent dev path:
+
+```bash
+pnpm exec tsx apps/cli/src/index.ts --command <command> --input '<json>'
+```
+
+### 2) Read examples
+
+```bash
+chain-skills -c token.balance -i '{"chain":"base","token":"0x...","owner":"0x..."}'
+chain-skills -c oracle.priceByPair -i '{"chain":"polygon","base":"ETH","quote":"USD"}'
+chain-skills -c lending.health -i '{"chain":"arbitrum","account":"0x..."}'
+```
+
+### 3) Write examples (safe first)
+
+```bash
+chain-skills -c token.approve -i '{"chain":"optimism","token":"0x...","spender":"0x...","amount":"1000000","simulate":true}'
+chain-skills -c dex.swap -i '{"protocol":"v3","chain":"base","tokenIn":"0x...","tokenOut":"0x...","amountIn":"1000000","amountOutMinimum":"990000","recipient":"0x...","simulate":true}'
+chain-skills -c lending.borrow -i '{"chain":"arbitrum","asset":"0x...","amount":"500000","rateMode":2,"simulate":true}'
+```
+
+Then set `simulate` to `false` to execute.
+
+---
+
+## Agent-focused docs
+
+- `docs/evm-transaction-playbook.md` → fastest command templates for all major capabilities
+- `docs/protocol-coverage-matrix.md` → what is implemented and per-chain status
+- `docs/protocol-reference.md` → addresses/ABI/gotchas
+
+---
+
+## GitHub Pages docs portal (hosted skill site)
+
+This repo is configured with `.github/workflows/pages.yml` to deploy a simple docs site from `docs/site/`.
+
+After the workflow runs, your hosted docs URL should be:
+
+- **https://pizzahi5.github.io/BuildAll/**
+
+If not live yet:
+1. Go to **Repo → Settings → Pages**
+2. Set **Build and deployment** to **GitHub Actions**
+3. Re-run workflow: **Deploy Docs to GitHub Pages**
+
+This gives other agents one stable URL to learn skill commands quickly.
+
+---
+
+## Output contract
+
+All commands return:
 - `ok: boolean`
 - `data?: object`
 - `error?: { code, message, details? }`
