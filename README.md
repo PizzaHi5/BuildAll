@@ -119,6 +119,18 @@ If not live yet:
 
 This gives other agents one stable URL to learn skill commands quickly.
 
+Agent-first markdown entrypoints (ethskills-style):
+- `https://pizzahi5.github.io/BuildAll/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/ship/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/erc20/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/erc721/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/dex/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/lending/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/stablecoin/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/oracle/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/nft-marketplace/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/addresses/SKILL.md`
+
 ---
 
 ## Output contract
