@@ -33,7 +33,8 @@ import {
   openseaFloor,
   openseaListings,
   bridgeRegistry,
-  bridgeValidateAddress
+  bridgeValidateAddress,
+  bridgePreflight
 } from '../../protocols/src/index.js';
 import {
   hederaAccount,
@@ -127,6 +128,8 @@ export const runSkillCommand = async (command: string, input: CommandInput): Pro
       return bridgeRegistry(input as never);
     case 'bridge.validateAddress':
       return bridgeValidateAddress(input as never);
+    case 'bridge.preflight':
+      return bridgePreflight(input as never);
 
     case 'solana.balance':
       return solanaBalance(input as never);

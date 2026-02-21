@@ -75,6 +75,8 @@ export const BRIDGE_REGISTRY_MAINNET: Record<string, BridgeChainRegistry> = {
   }
 };
 
+const EVM_CHAINS = new Set(['ethereum', 'base', 'arbitrum', 'optimism', 'polygon']);
+
 export const bridgeRegistry = async (input: { chain?: string }) =>
   withTiming<{ chain?: BridgeChainRegistry; chains?: Record<string, BridgeChainRegistry> }>('multi', 'BridgeRegistry', true, async () => {
     if (input.chain) {
@@ -121,6 +123,106 @@ export const bridgeValidateAddress = async (input: {
         chain: input.chain,
         contractType: input.contractType,
         address: input.address
+      }
+    };
+  });
+
+export const bridgePreflight = async (input: {
+  sourceChain: string;
+  destinationChain: string;
+  sourceToken?: string;
+  destinationToken?: string;
+  preferredProtocols?: BridgeProtocol[];
+}) =>
+  withTiming('multi', 'BridgePreflight', true, async () => {
+    const source = BRIDGE_REGISTRY_MAINNET[input.sourceChain];
+    const destination = BRIDGE_REGISTRY_MAINNET[input.destinationChain];
+
+    if (!source) throw new SkillException('UNSUPPORTED_CHAIN', `Unsupported source chain: ${input.sourceChain}`);
+    if (!destination) throw new SkillException('UNSUPPORTED_CHAIN', `Unsupported destination chain: ${input.destinationChain}`);
+    if (input.sourceChain === input.destinationChain) {
+      throw new SkillException('INVALID_INPUT', 'Source and destination chains must differ for bridging');
+    }
+
+    const preferred: BridgeProtocol[] = input.preferredProtocols?.length ? input.preferredProtocols : ['wormhole', 'allbridge'];
+    const routeCandidates: Array<{
+      protocol: BridgeProtocol;
+      compatible: boolean;
+      reason?: string;
+      sourceTargets?: Record<string, string | undefined>;
+      destinationTargets?: Record<string, string | undefined>;
+    }> = [];
+
+    for (const protocol of preferred) {
+      const s = (protocol === 'wormhole' ? source.wormhole : source.allbridge) as Record<string, string | undefined> | undefined;
+      const d = (protocol === 'wormhole' ? destination.wormhole : destination.allbridge) as
+        | Record<string, string | undefined>
+        | undefined;
+      if (!s || !d) {
+        routeCandidates.push({
+          protocol,
+          compatible: false,
+          reason: `Missing ${protocol} registry entries on one or both chains`
+        });
+        continue;
+      }
+
+      const hasCoreRoute = Boolean(
+        (s.tokenBridge || s.bridge || s.core) && (d.tokenBridge || d.bridge || d.core)
+      );
+
+      routeCandidates.push({
+        protocol,
+        compatible: hasCoreRoute,
+        reason: hasCoreRoute ? undefined : `No executable ${protocol} route target pair in registry`,
+        sourceTargets: s,
+        destinationTargets: d
+      });
+    }
+
+    const compatibleRoutes = routeCandidates.filter((r) => r.compatible);
+    const useCoinbaseFallback = compatibleRoutes.length === 0;
+
+    const requiresCexForLikelyPath =
+      useCoinbaseFallback ||
+      ((EVM_CHAINS.has(input.sourceChain) && input.destinationChain === 'solana') ||
+        (input.sourceChain === 'solana' && EVM_CHAINS.has(input.destinationChain))) &&
+        !compatibleRoutes.some((r) => r.protocol === 'wormhole' || r.protocol === 'allbridge');
+
+    const actionPlan = useCoinbaseFallback
+      ? [
+          'Collect Coinbase Advanced Trade API key with Trade, View, Transfer scopes',
+          'Create source-asset deposit address and wait for confirmations',
+          'Execute market conversion (source asset -> USD -> destination asset)',
+          'Withdraw destination asset to target chain wallet',
+          'Confirm destination-chain receipt onchain'
+        ]
+      : [
+          'Select best compatible bridge route from routeCandidates',
+          'Validate bridge contract/program targets against bridge.registry entries',
+          'Approve/prepare source asset transfer to bridge route',
+          'Execute bridge transfer and monitor message finality',
+          'If required, swap bridged asset into destination target asset',
+          'Confirm destination receipt and return completion payload'
+        ];
+
+    return {
+      data: {
+        sourceChain: input.sourceChain,
+        destinationChain: input.destinationChain,
+        sourceToken: input.sourceToken,
+        destinationToken: input.destinationToken,
+        routeCandidates,
+        selectedStrategy: useCoinbaseFallback ? 'coinbase-fallback' : 'direct-bridge',
+        requiresCoinbaseApiKey: requiresCexForLikelyPath,
+        coinbaseRequiredScopes: ['Trade', 'View', 'Transfer'],
+        actionPlan,
+        guardrails: [
+          'Always simulate and/or quote first',
+          'Reject unverified bridge targets via bridge.validateAddress',
+          'Require explicit user confirmation before executing transfers/trades/withdrawals',
+          'Return fees and slippage estimate before execution'
+        ]
       }
     };
   });

@@ -13,6 +13,7 @@ Machine-readable bridge target registry used for runtime validation.
 ## Validation commands
 - `bridge.registry` → returns registry entries (single chain or all)
 - `bridge.validateAddress` → hard-fails if address does not match verified registry entry
+- `bridge.preflight` → deterministic route strategy + action plan (direct bridge vs Coinbase fallback)
 
 ### Example
 ```bash

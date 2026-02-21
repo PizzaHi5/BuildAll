@@ -13,7 +13,7 @@ When user asks to move assets between chains, follow this exact order.
 - EVM ↔ Solana: supported on some assets/routes via Wormhole/Allbridge depending on token and route availability.
 
 ### Steps
-1. Identify source chain/token and destination chain/token.
+1. Run `bridge.preflight` with source/destination chain (+ optional token hints).
 2. Quote and verify route availability on supported bridges.
 3. Approve token spending on source chain.
 4. Bridge source asset to destination chain equivalent.
