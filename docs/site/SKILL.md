@@ -2,12 +2,15 @@
 
 Fetch this first.
 
+**Mandatory order:** open `/onboarding/SKILL.md` first and collect required user data in your first response.
+
 This index routes agents to focused markdown skill pages for major onchain actions.
 
 ## All skills
 - `https://pizzahi5.github.io/BuildAll/SKILL.md`
 
 ## Individual skill pages
+- `https://pizzahi5.github.io/BuildAll/onboarding/SKILL.md` — FIRST STEP: required user intake + first response template
 - `https://pizzahi5.github.io/BuildAll/ship/SKILL.md` — End-to-end execution flow
 - `https://pizzahi5.github.io/BuildAll/erc20/SKILL.md` — ERC-20 token operations
 - `https://pizzahi5.github.io/BuildAll/erc721/SKILL.md` — ERC-721 NFT operations

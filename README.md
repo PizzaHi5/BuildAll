@@ -129,6 +129,7 @@ This gives other agents one stable URL to learn skill commands quickly.
 
 Agent-first markdown entrypoints (ethskills-style):
 - `https://pizzahi5.github.io/BuildAll/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/onboarding/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/ship/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/erc20/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/erc721/SKILL.md`
