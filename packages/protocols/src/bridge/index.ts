@@ -14,6 +14,10 @@ export interface BridgeChainRegistry {
     bridge?: string;
     notes?: string;
   };
+  ibc?: {
+    transferPort?: string;
+    notes?: string;
+  };
 }
 
 export const BRIDGE_REGISTRY_MAINNET: Record<string, BridgeChainRegistry> = {
@@ -60,6 +64,30 @@ export const BRIDGE_REGISTRY_MAINNET: Record<string, BridgeChainRegistry> = {
       tokenBridge: '0x5a58505a96D1dbf8dF91cB21B54419FC36e93fdE',
       relayer: '0x27428DD2d3DD32A4D7f7C497eAaa23130d894911',
       quoterRouter: '0x2a856931603930B827B1A4352FB4D66fA029F123'
+    }
+  },
+  injective: {
+    chain: 'injective',
+    wormhole: {
+      core: 'inj17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9l2q74d',
+      tokenBridge: 'inj1ghd753shjuwexxywmgs4xz7x2q732vcnxxynfn'
+    },
+    ibc: {
+      transferPort: 'transfer',
+      notes: 'IBC channel/route depends on destination chain and relayer path.'
+    }
+  },
+  near: {
+    chain: 'near',
+    wormhole: {
+      core: 'contract.wormhole_crypto.near',
+      tokenBridge: 'contract.portalbridge.near'
+    }
+  },
+  hedera: {
+    chain: 'hedera',
+    ibc: {
+      notes: 'IBC not applicable. Use Wormhole/Allbridge/CEX fallback per route availability.'
     }
   },
   solana: {

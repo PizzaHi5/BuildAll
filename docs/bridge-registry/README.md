@@ -9,6 +9,9 @@ Machine-readable bridge target registry used for runtime validation.
 - `mainnet/optimism.json`
 - `mainnet/polygon.json`
 - `mainnet/solana.json`
+- `mainnet/injective.json`
+- `mainnet/near.json`
+- `mainnet/hedera.json`
 
 ## Validation commands
 - `bridge.registry` → returns registry entries (single chain or all)

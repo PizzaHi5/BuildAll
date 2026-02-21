@@ -18,5 +18,6 @@
 | Solana derivatives | mango via solana.tx.sendRaw | ✅ Execution pattern enabled (signed tx broadcast) |
 | Solana oracle | pyth via RPC account reads | ✅ Read pattern documented |
 | Solana NFT marketplace | magiceden via API + solana.tx.sendRaw | ✅ Execution pattern documented |
-| NEAR | near.account/near.balance | ✅ Starter adapter |
-| Hedera | hedera.account/hedera.token | ✅ Starter adapter |
+| Injective | injective.account/token.balance/dex.spotMarkets/dex.derivativeMarkets/ibc.denomTrace/tx.broadcast | ✅ Added (mainnet read + signed tx broadcast) |
+| NEAR | near.account/near.balance/nep141.balance/ref.pools/burrow.account/paras.tokens/tx.broadcast | ✅ Expanded adapter |
+| Hedera | hedera.account/token/hts.tokenInfo/hcs.messages/usdc.info/evm.call/evm.sendRaw | ✅ Expanded adapter |

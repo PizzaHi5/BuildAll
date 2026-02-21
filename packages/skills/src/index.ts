@@ -39,8 +39,24 @@ import {
 import {
   hederaAccount,
   hederaToken,
+  hederaHcsTopicMessages,
+  hederaHtsTokenInfo,
+  hederaUsdcInfo,
+  hederaEvmCall,
+  hederaEvmSendRaw,
+  injectiveAccount,
+  injectiveTokenBalance,
+  injectiveSpotMarkets,
+  injectiveDerivativeMarkets,
+  injectiveIbcDenomTrace,
+  injectiveTxBroadcast,
   nearAccount,
   nearBalance,
+  nearNep141Balance,
+  nearRefPools,
+  nearBurrowAccount,
+  nearParasTokens,
+  nearTxBroadcast,
   solanaBalance,
   solanaSplBalance,
   solanaSplTransfer,
@@ -147,10 +163,44 @@ export const runSkillCommand = async (command: string, input: CommandInput): Pro
       return nearAccount(input as never);
     case 'near.balance':
       return nearBalance(input as never);
+    case 'near.nep141.balance':
+      return nearNep141Balance(input as never);
+    case 'near.ref.pools':
+      return nearRefPools(input as never);
+    case 'near.burrow.account':
+      return nearBurrowAccount(input as never);
+    case 'near.paras.tokens':
+      return nearParasTokens(input as never);
+    case 'near.tx.broadcast':
+      return nearTxBroadcast(input as never);
+
     case 'hedera.account':
       return hederaAccount(input as never);
     case 'hedera.token':
       return hederaToken(input as never);
+    case 'hedera.hts.tokenInfo':
+      return hederaHtsTokenInfo(input as never);
+    case 'hedera.hcs.messages':
+      return hederaHcsTopicMessages(input as never);
+    case 'hedera.usdc.info':
+      return hederaUsdcInfo(input as never);
+    case 'hedera.evm.call':
+      return hederaEvmCall(input as never);
+    case 'hedera.evm.sendRaw':
+      return hederaEvmSendRaw(input as never);
+
+    case 'injective.account':
+      return injectiveAccount(input as never);
+    case 'injective.token.balance':
+      return injectiveTokenBalance(input as never);
+    case 'injective.dex.spotMarkets':
+      return injectiveSpotMarkets();
+    case 'injective.dex.derivativeMarkets':
+      return injectiveDerivativeMarkets();
+    case 'injective.ibc.denomTrace':
+      return injectiveIbcDenomTrace(input as never);
+    case 'injective.tx.broadcast':
+      return injectiveTxBroadcast(input as never);
 
     default:
       throw new SkillException('INVALID_INPUT', `Unknown command: ${command}`);

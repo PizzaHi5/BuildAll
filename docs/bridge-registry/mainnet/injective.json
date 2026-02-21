@@ -1,0 +1,15 @@
+{
+  "chain": "injective",
+  "wormhole": {
+    "core": "inj17p9rzwnnfxcjp32un9ug7yhhzgtkhvl9l2q74d",
+    "tokenBridge": "inj1ghd753shjuwexxywmgs4xz7x2q732vcnxxynfn"
+  },
+  "ibc": {
+    "transferPort": "transfer",
+    "notes": "IBC channel is route-dependent by destination chain."
+  },
+  "sources": [
+    "https://wormhole.com/docs/products/reference/contract-addresses/",
+    "https://docs.injective.network/"
+  ]
+}

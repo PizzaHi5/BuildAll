@@ -15,6 +15,9 @@ An agent can route user intent ("swap", "borrow", "check NFT owner", "get oracle
 - Optimism
 - Polygon
 - Solana
+- Injective
+- NEAR
+- Hedera
 
 ### Supported major functionality
 - **Token standard (fungible):** ERC-20
@@ -25,6 +28,9 @@ An agent can route user intent ("swap", "borrow", "check NFT owner", "get oracle
 - **Oracle:** Chainlink feeds
 - **NFT marketplace:** OpenSea read APIs
 - **Solana core tx:** SOL transfer, SPL transfer/balance, raw signed tx broadcast (protocol-agnostic)
+- **Injective:** Cosmos-native balances, spot/derivatives market reads, IBC denom tracing, tx broadcast
+- **NEAR:** NEP-141 balances, Ref Finance/Burrow/Paras read flows, tx broadcast
+- **Hedera:** HTS/HCS read flows, USDC metadata, Hedera EVM call/raw send
 
 ---
 
@@ -140,6 +146,10 @@ Agent-first markdown entrypoints (ethskills-style):
 - `https://pizzahi5.github.io/BuildAll/solana-pyth/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/solana-magiceden/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/bridging/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/injective/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/near/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/hedera/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/ibc/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/docs/bridge-registry/README.md`
 
 ---

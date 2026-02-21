@@ -1,0 +1,8 @@
+{
+  "chain": "hedera",
+  "notes": "No canonical IBC route. Bridge support is route/asset dependent via external protocols.",
+  "sources": [
+    "https://wormhole.com/docs/products/reference/contract-addresses/",
+    "https://docs-core.allbridge.io"
+  ]
+}

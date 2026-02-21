@@ -1,0 +1,10 @@
+{
+  "chain": "near",
+  "wormhole": {
+    "core": "contract.wormhole_crypto.near",
+    "tokenBridge": "contract.portalbridge.near"
+  },
+  "sources": [
+    "https://wormhole.com/docs/products/reference/contract-addresses/"
+  ]
+}

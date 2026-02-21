@@ -11,6 +11,8 @@ When user asks to move assets between chains, follow this exact order.
 ### Compatible paths (practical)
 - EVM ↔ EVM (Ethereum, Base, Arbitrum, Optimism, Polygon): usually direct via bridge protocols.
 - EVM ↔ Solana: supported on some assets/routes via Wormhole/Allbridge depending on token and route availability.
+- Injective ↔ Cosmos chains: use IBC routes (channel/relay dependent).
+- NEAR/Hedera routes: bridge support is protocol/asset dependent; preflight route validation required.
 
 ### Steps
 1. Run `bridge.preflight` with source/destination chain (+ optional token hints).
