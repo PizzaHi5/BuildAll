@@ -1,4 +1,4 @@
-import { SkillException, withTiming } from '@chain-skills/core';
+import { SkillException, resolvePrimaryWallet, withTiming } from '@chain-skills/core';
 
 const HEDERA_MIRROR_URL = process.env.HEDERA_MIRROR_URL ?? 'https://mainnet-public.mirrornode.hedera.com/api/v1';
 const HEDERA_JSON_RPC_URL = process.env.HEDERA_JSON_RPC_URL ?? 'https://mainnet.hashio.io/api';
@@ -61,8 +61,16 @@ export const hederaEvmCall = async (input: { to: `0x${string}`; data: `0x${strin
     return { data: { result } };
   });
 
-export const hederaEvmSendRaw = async (input: { signedTxHex: `0x${string}` }) =>
+export const hederaEvmSendRaw = async (input: { signedTxHex: `0x${string}`; browserConfirmed?: boolean }) =>
   withTiming('hedera', 'Hedera', false, async () => {
+    if (!input.browserConfirmed) {
+      const wallet = resolvePrimaryWallet('hedera');
+      throw new SkillException('INVALID_INPUT', 'Browser wallet confirmation required for Hedera transaction broadcast', {
+        chain: 'hedera',
+        wallet: wallet.wallet,
+        browser: wallet.browser
+      });
+    }
     const txHash = await evmRpc<string>('eth_sendRawTransaction', [input.signedTxHex]);
     return { data: { txHash } };
   });

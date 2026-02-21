@@ -23,6 +23,22 @@ BuildAll solves this by providing a **seamless, standardized skill layer** where
 
 In practice, this makes onchain tasks **faster, safer, and easier to automate** through chat.
 
+### Browser wallet policy (new)
+- Writes require browser wallet confirmation by default (`ENFORCE_BROWSER_CONFIRMATION=true`).
+- For test/headless runs you can pass `privateKey` in command input (session-scoped override). This auto-sets `ENFORCE_BROWSER_CONFIRMATION=false` and `ALLOW_UNSAFE_LOCAL_SIGNING=true` for that run.
+- Primary wallets by chain:
+  - EVM (Ethereum/Base/Arbitrum/Optimism/Polygon): **MetaMask**
+  - Solana: **Phantom**
+  - NEAR: **NEAR Wallet**
+  - Hedera: **HashPack**
+  - Injective: **Keplr**
+- Use `wallet.resolve` to fetch routing for a chain at runtime.
+- Use `wallet.route` for cross-chain flows (returns one confirmation per involved wallet/chain).
+- Use `wallet.evm.browserDispatch` to generate `window.ethereum.request(...)` payloads for MetaMask-style confirmation.
+- Use `wallet.evm.browserRelayDispatch` for OpenClaw Chrome Relay execution (attached tab, no copy/paste).
+- Use `tx.executeWithBrowserConfirm` to orchestrate simulate → browser confirm → execute.
+- For emergency legacy behavior only, set `ALLOW_UNSAFE_LOCAL_SIGNING=true`.
+
 ### Product theory
 
 This is designed as an agent primitive: if a blockchain has a `SKILL.md`, an agent can learn it and act.

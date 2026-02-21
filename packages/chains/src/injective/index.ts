@@ -1,4 +1,4 @@
-import { SkillException, withTiming } from '@chain-skills/core';
+import { SkillException, resolvePrimaryWallet, withTiming } from '@chain-skills/core';
 
 const INJECTIVE_LCD_URL = process.env.INJECTIVE_LCD_URL ?? 'https://lcd.injective.network';
 
@@ -45,8 +45,20 @@ export const injectiveIbcDenomTrace = async (input: { hash: string }) =>
     return { data: { trace } };
   });
 
-export const injectiveTxBroadcast = async (input: { txBytesBase64: string; mode?: 'BROADCAST_MODE_SYNC' | 'BROADCAST_MODE_ASYNC' | 'BROADCAST_MODE_BLOCK' }) =>
+export const injectiveTxBroadcast = async (input: {
+  txBytesBase64: string;
+  mode?: 'BROADCAST_MODE_SYNC' | 'BROADCAST_MODE_ASYNC' | 'BROADCAST_MODE_BLOCK';
+  browserConfirmed?: boolean;
+}) =>
   withTiming('injective', 'Injective', false, async () => {
+    if (!input.browserConfirmed) {
+      const wallet = resolvePrimaryWallet('injective');
+      throw new SkillException('INVALID_INPUT', 'Browser wallet confirmation required for Injective transaction broadcast', {
+        chain: 'injective',
+        wallet: wallet.wallet,
+        browser: wallet.browser
+      });
+    }
     const result = await fetchJson<Record<string, unknown>>('/cosmos/tx/v1beta1/txs', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },

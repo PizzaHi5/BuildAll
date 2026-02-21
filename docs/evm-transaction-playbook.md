@@ -110,6 +110,13 @@ chain-skills -c opensea.asset -i '{"chain":"base","contract":"0x...","tokenId":"
 
 ---
 
+## Wallet execution requirement (important)
+- BuildAll docs are not a swap frontend. Execute on the user’s real dApp tab.
+- For EVM wallet signing, use injected provider JSON-RPC (`window.ethereum.request`) with `eth_sendTransaction` (MetaMask flow per EthSkills guidance).
+- Prefer helper commands:
+  - `wallet.evm.browserRelayDispatch` (OpenClaw Chrome/Brave relay attached tab)
+  - `wallet.evm.browserDispatch` (manual/integration fallback)
+
 ## Safety defaults
 - Set `"simulate": true` first for every write path.
 - Enforce slippage (`amountOutMinimum`) for swaps.

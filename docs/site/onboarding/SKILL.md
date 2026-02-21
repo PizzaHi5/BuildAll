@@ -2,8 +2,14 @@
 
 This is the first file an agent should use before any execution.
 
+## Mission framing (important)
+You are not here to demo the docs site. You are here to execute blockchain tasks for the user.
+Use BuildAll docs as a reference index, then run transactions/read calls with the correct skills commands.
+
 ## Rule: first response must collect required user data
 When a user references BuildAll docs, the agent's **first response** should be a data-intake request, not an execution attempt.
+
+Also clarify: BuildAll is documentation/tooling, not the swap/bridge frontend. You must run execution on the user's attached dApp tab + wallet.
 
 Use this checklist and ask only missing items.
 
@@ -32,7 +38,10 @@ Use this checklist and ask only missing items.
 
 ## Conditionally required data
 ### For EVM writes
-- Wallet signing enabled in runtime (private key or external signer)
+- Require browser-wallet path: MetaMask (or user wallet) on attached dApp tab
+- Dispatch with injected provider JSON-RPC (`window.ethereum.request`), especially `eth_sendTransaction`
+- Use BuildAll helpers: `wallet.evm.browserDispatch` or `wallet.evm.browserRelayDispatch`
+- If relay unavailable, instruct user to enable OpenClaw Browser Relay on the target Chrome/Brave tab
 - Gas token availability (ETH/MATIC/etc.)
 - If using Uniswap API-backed skills: `UNISWAP_API_KEY` configured in environment
 - Key creation portal: https://developers.uniswap.org/dashboard
@@ -63,6 +72,9 @@ Use this checklist and ask only missing items.
 
 ## Mandatory first-response template
 Use this exact structure in first reply:
+
+Also include one explicit line when relevant:
+- "I’ll use BuildAll docs as reference and execute directly onchain via the skills runtime; BuildAll itself is not the execution UI."
 
 1. Confirm intent in one sentence.
 2. Ask for missing required fields from checklist.

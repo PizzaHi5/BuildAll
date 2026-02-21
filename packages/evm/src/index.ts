@@ -4,6 +4,7 @@ import {
   formatUnits,
   getAddress,
   http,
+  numberToHex,
   parseUnits,
   publicActions,
   type Abi,
@@ -14,10 +15,11 @@ import {
 } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { arbitrum, base, mainnet, optimism, polygon } from 'viem/chains';
-import { loadConfig, SkillException, type AppConfig, type ChainConfig } from '@chain-skills/core';
+import { loadConfig, resolvePrimaryWallet, SkillException, type AppConfig, type ChainConfig } from '@chain-skills/core';
 
 export interface EvmContext {
   config: AppConfig;
+  chainKey: string;
   chain: ChainConfig;
   publicClient: PublicClient;
   walletClient?: WalletClient;
@@ -46,12 +48,12 @@ export const createEvmContext = (chainKey = 'ethereum'): EvmContext => {
   });
 
   if (!config.privateKey) {
-    return { config, chain, publicClient };
+    return { config, chainKey, chain, publicClient };
   }
 
   const account = privateKeyToAccount(config.privateKey);
   const walletClient = createWalletClient({ account, chain: viemChain, transport: http(chain.rpcUrl) }).extend(publicActions);
-  return { config, chain, publicClient, walletClient, account };
+  return { config, chainKey, chain, publicClient, walletClient, account };
 };
 
 export const parseAmount = (value: string, decimals: number): bigint => parseUnits(value, decimals);
@@ -71,6 +73,35 @@ export const readContract = async <T>(ctx: EvmContext, params: { address: `0x${s
   }
 };
 
+const toHexQuantity = (value: bigint | number | undefined): string | undefined => {
+  if (value === undefined) return undefined;
+  return numberToHex(typeof value === 'number' ? BigInt(value) : value);
+};
+
+const buildBrowserRequest = (request: {
+  from?: `0x${string}`;
+  to?: `0x${string}`;
+  data?: `0x${string}`;
+  value?: bigint;
+  gas?: bigint;
+  maxFeePerGas?: bigint;
+  maxPriorityFeePerGas?: bigint;
+}): { method: 'eth_sendTransaction'; params: Record<string, string>[] } => {
+  const tx: Record<string, string> = {};
+  if (request.from) tx.from = request.from;
+  if (request.to) tx.to = request.to;
+  if (request.data) tx.data = request.data;
+  const value = toHexQuantity(request.value);
+  const gas = toHexQuantity(request.gas);
+  const maxFeePerGas = toHexQuantity(request.maxFeePerGas);
+  const maxPriorityFeePerGas = toHexQuantity(request.maxPriorityFeePerGas);
+  if (value) tx.value = value;
+  if (gas) tx.gas = gas;
+  if (maxFeePerGas) tx.maxFeePerGas = maxFeePerGas;
+  if (maxPriorityFeePerGas) tx.maxPriorityFeePerGas = maxPriorityFeePerGas;
+  return { method: 'eth_sendTransaction', params: [tx] };
+};
+
 export const sendContractTx = async (
   ctx: EvmContext,
   params: {
@@ -79,10 +110,17 @@ export const sendContractTx = async (
     functionName: string;
     args?: unknown[];
     simulate?: boolean;
+    from?: `0x${string}`;
   }
-): Promise<{ txHash?: `0x${string}`; simulated: boolean; blockNumber?: bigint }> => {
-  if (!ctx.walletClient || !ctx.account) {
-    throw new SkillException('INVALID_INPUT', 'Write requested but EVM_PRIVATE_KEY is not configured');
+): Promise<{
+  txHash?: `0x${string}`;
+  simulated: boolean;
+  blockNumber?: bigint;
+  browserRequest?: { method: 'eth_sendTransaction'; params: Record<string, string>[] };
+}> => {
+  const simulationAccount = (params.from ?? ctx.account?.address) as `0x${string}` | undefined;
+  if (!simulationAccount) {
+    throw new SkillException('INVALID_INPUT', 'EVM write simulation requires from address (wallet account)');
   }
 
   const simulation = await ctx.publicClient.simulateContract({
@@ -90,7 +128,7 @@ export const sendContractTx = async (
     abi: params.abi,
     functionName: params.functionName as never,
     args: params.args as never,
-    account: ctx.account
+    account: simulationAccount
   });
 
   if (simulation.request.gas && simulation.request.gas > ctx.config.maxGasLimit) {
@@ -100,8 +138,28 @@ export const sendContractTx = async (
     });
   }
 
+  const browserRequest = buildBrowserRequest(simulation.request);
+
   if (params.simulate) {
-    return { simulated: true };
+    return { simulated: true, browserRequest };
+  }
+
+  if (ctx.config.enforceBrowserConfirmation && !ctx.config.allowUnsafeLocalSigning) {
+    const wallet = resolvePrimaryWallet(ctx.chainKey);
+    throw new SkillException('INVALID_INPUT', 'Browser wallet confirmation required for EVM writes', {
+      chain: ctx.chainKey,
+      wallet: wallet.wallet,
+      browser: wallet.browser,
+      browserRequest,
+      guidance:
+        'Submit this via the browser-injected provider (window.ethereum.request). Do not sign with local private keys when browser confirmation is enforced.',
+      relayHelp:
+        'If no browser tab is connected, install/enable OpenClaw Browser Relay in Chrome/Brave and click the relay toolbar icon on the target tab (badge ON), then retry.'
+    });
+  }
+
+  if (!ctx.walletClient || !ctx.account) {
+    throw new SkillException('INVALID_INPUT', 'Local signing path requested but EVM_PRIVATE_KEY is not configured');
   }
 
   const txHash = await ctx.walletClient.writeContract(simulation.request);

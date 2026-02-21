@@ -1,4 +1,4 @@
-import { SkillException, withTiming } from '@chain-skills/core';
+import { SkillException, resolvePrimaryWallet, withTiming } from '@chain-skills/core';
 
 const NEAR_RPC_URL = process.env.NEAR_RPC_URL ?? 'https://rpc.mainnet.near.org';
 
@@ -100,8 +100,16 @@ export const nearParasTokens = async (input: { ownerId: string; parasContract?: 
     return { data: { parasContract, ownerId: input.ownerId, tokens: decodeNearResult(result) } };
   });
 
-export const nearTxBroadcast = async (input: { signedTxBase64: string }) =>
+export const nearTxBroadcast = async (input: { signedTxBase64: string; browserConfirmed?: boolean }) =>
   withTiming('near', 'NEAR', false, async () => {
+    if (!input.browserConfirmed) {
+      const wallet = resolvePrimaryWallet('near');
+      throw new SkillException('INVALID_INPUT', 'Browser wallet confirmation required for NEAR transaction broadcast', {
+        chain: 'near',
+        wallet: wallet.wallet,
+        browser: wallet.browser
+      });
+    }
     const result = await rpc<Record<string, unknown>>('broadcast_tx_commit', [input.signedTxBase64]);
     return { data: { result } };
   });

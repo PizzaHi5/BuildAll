@@ -1,4 +1,4 @@
-import { SkillException, withTiming } from '@chain-skills/core';
+import { SkillException, resolvePrimaryWallet, withTiming } from '@chain-skills/core';
 import {
   Connection,
   Keypair,
@@ -60,7 +60,7 @@ export const solanaTx = async (input: { signature: string }) =>
     return { data: { tx } };
   });
 
-export const solanaSendRawTx = async (input: { signedTxBase64: string; simulate?: boolean }) =>
+export const solanaSendRawTx = async (input: { signedTxBase64: string; simulate?: boolean; browserConfirmed?: boolean }) =>
   withTiming<{ simulated: boolean; signature: string | null; simulation: unknown }>('solana', 'Solana', input.simulate ?? false, async () => {
     const conn = connection();
     const txBytes = Buffer.from(input.signedTxBase64, 'base64');
@@ -71,13 +71,22 @@ export const solanaSendRawTx = async (input: { signedTxBase64: string; simulate?
       return { data: { simulated: true, signature: null as string | null, simulation: sim.value } };
     }
 
+    if (!input.browserConfirmed) {
+      const wallet = resolvePrimaryWallet('solana');
+      throw new SkillException('INVALID_INPUT', 'Browser wallet confirmation required for Solana transaction broadcast', {
+        chain: 'solana',
+        wallet: wallet.wallet,
+        browser: wallet.browser
+      });
+    }
+
     const signature = await conn.sendRawTransaction(txBytes, { skipPreflight: false, preflightCommitment: DEFAULT_COMMITMENT });
     const latest = await conn.getLatestBlockhash(DEFAULT_COMMITMENT);
     await conn.confirmTransaction({ signature, ...latest }, DEFAULT_COMMITMENT);
     return { data: { simulated: false, signature, simulation: {} } };
   });
 
-export const solanaTransferSol = async (input: { to: string; lamports: number; simulate?: boolean }) =>
+export const solanaTransferSol = async (input: { to: string; lamports: number; simulate?: boolean; browserConfirmed?: boolean }) =>
   withTiming<{
     simulated: boolean;
     signature: string | null;
@@ -111,6 +120,16 @@ export const solanaTransferSol = async (input: { to: string; lamports: number; s
       };
     }
 
+    if (!input.browserConfirmed) {
+      const wallet = resolvePrimaryWallet('solana');
+      throw new SkillException('INVALID_INPUT', 'Browser wallet confirmation required for Solana transfers', {
+        chain: 'solana',
+        wallet: wallet.wallet,
+        browser: wallet.browser,
+        guidance: 'Prefer building/signing in Phantom and then submit via solana.tx.sendRaw with browserConfirmed=true.'
+      });
+    }
+
     const signature = await sendAndConfirmTransaction(conn, tx, [signer], { commitment: DEFAULT_COMMITMENT });
     return {
       data: {
@@ -134,7 +153,7 @@ export const solanaSplBalance = async (input: { owner: string; mint: string }) =
     return { data: { owner: input.owner, mint: input.mint, ata: ata.toBase58(), balance } };
   });
 
-export const solanaSplTransfer = async (input: { mint: string; toOwner: string; amountRaw: string; simulate?: boolean }) =>
+export const solanaSplTransfer = async (input: { mint: string; toOwner: string; amountRaw: string; simulate?: boolean; browserConfirmed?: boolean }) =>
   withTiming<{
     simulated: boolean;
     signature: string | null;
@@ -168,6 +187,16 @@ export const solanaSplTransfer = async (input: { mint: string; toOwner: string; 
           amountRaw: input.amountRaw
         }
       };
+    }
+
+    if (!input.browserConfirmed) {
+      const wallet = resolvePrimaryWallet('solana');
+      throw new SkillException('INVALID_INPUT', 'Browser wallet confirmation required for Solana SPL transfers', {
+        chain: 'solana',
+        wallet: wallet.wallet,
+        browser: wallet.browser,
+        guidance: 'Prefer browser wallet signing and then submit signed payload via solana.tx.sendRaw.'
+      });
     }
 
     const signature = await sendAndConfirmTransaction(conn, tx, [signer], { commitment: DEFAULT_COMMITMENT });

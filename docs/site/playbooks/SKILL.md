@@ -11,9 +11,13 @@ Use these deterministic mappings from user intent -> command sequence.
 1. If user selected public RPC, run `rpc.resolve` for the execution chain
 2. Prefer Uniswap skill/API path first (https://api-docs.uniswap.org/introduction)
 3. `dex.quote`
-4. `token.approve` (`simulate:true` then execute)
-5. `dex.swap` (`simulate:true` then execute)
-6. If API route metadata is available, enforce returned route/slippage constraints
+4. `token.approve` (`simulate:true`)
+5. `dex.swap` (`simulate:true`)
+6. Generate wallet payload via `wallet.evm.browserRelayDispatch` (or `wallet.evm.browserDispatch`)
+7. Execute on the user's attached dApp tab using browser provider (`eth_sendTransaction`)
+8. If API route metadata is available, enforce returned route/slippage constraints
+
+Critical: BuildAll page is not the trading UI. Use the actual swap/bridge dApp tab for clicks + wallet prompts.
 
 ## C) Solana SPL transfer
 1. `solana.spl.balance`

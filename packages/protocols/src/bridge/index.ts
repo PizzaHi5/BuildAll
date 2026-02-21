@@ -1,4 +1,4 @@
-import { SkillException, withTiming } from '@chain-skills/core';
+import { browserWalletConfirmationPlan, SkillException, withTiming } from '@chain-skills/core';
 
 export type BridgeProtocol = 'wormhole' | 'allbridge';
 
@@ -234,6 +234,8 @@ export const bridgePreflight = async (input: {
           'Confirm destination receipt and return completion payload'
         ];
 
+    const walletRoute = browserWalletConfirmationPlan([input.sourceChain, input.destinationChain]);
+
     return {
       data: {
         sourceChain: input.sourceChain,
@@ -245,10 +247,12 @@ export const bridgePreflight = async (input: {
         requiresCoinbaseApiKey: requiresCexForLikelyPath,
         coinbaseRequiredScopes: ['Trade', 'View', 'Transfer'],
         actionPlan,
+        walletRoute,
         guardrails: [
           'Always simulate and/or quote first',
           'Reject unverified bridge targets via bridge.validateAddress',
           'Require explicit user confirmation before executing transfers/trades/withdrawals',
+          'Require browser-wallet confirmation in each involved chain wallet',
           'Return fees and slippage estimate before execution'
         ]
       }

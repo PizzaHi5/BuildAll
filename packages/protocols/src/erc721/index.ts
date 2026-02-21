@@ -49,20 +49,22 @@ export const nftTransfer = async (input: {
   contract: `0x${string}`;
   tokenId: bigint;
   to: `0x${string}`;
+  from?: `0x${string}`;
   simulate?: boolean;
 }) => {
   const ctx = createEvmContext(input.chain);
-  if (!ctx.account) throw new Error('EVM_PRIVATE_KEY is required for nft.transfer');
-  const from = ctx.account.address;
+  const from = input.from ?? (ctx.account?.address as `0x${string}` | undefined);
+  if (!from) throw new Error('nft.transfer requires from address when no local signer is configured');
   return withTiming(input.chain, ctx.chain.name, input.simulate ?? false, async () => {
     const tx = await sendContractTx(ctx, {
       address: input.contract,
       abi: erc721Abi,
       functionName: 'safeTransferFrom',
       args: [from, input.to, input.tokenId],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from
     });
-    return { data: { transferred: true }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { transferred: true, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };
 

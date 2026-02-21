@@ -81,6 +81,7 @@ export const tokenApprove = async (input: {
   token: `0x${string}`;
   spender: `0x${string}`;
   amount: bigint;
+  from?: `0x${string}`;
   simulate?: boolean;
 }) => {
   const ctx = createEvmContext(input.chain);
@@ -90,9 +91,10 @@ export const tokenApprove = async (input: {
       abi: erc20Abi,
       functionName: 'approve',
       args: [input.spender, input.amount],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from
     });
-    return { data: { approved: true }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { approved: true, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };
 
@@ -101,6 +103,7 @@ export const tokenTransfer = async (input: {
   token: `0x${string}`;
   to: `0x${string}`;
   amount: bigint;
+  from?: `0x${string}`;
   simulate?: boolean;
 }) => {
   const ctx = createEvmContext(input.chain);
@@ -110,9 +113,10 @@ export const tokenTransfer = async (input: {
       abi: erc20Abi,
       functionName: 'transfer',
       args: [input.to, input.amount],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from
     });
-    return { data: { transferred: true }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { transferred: true, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };
 

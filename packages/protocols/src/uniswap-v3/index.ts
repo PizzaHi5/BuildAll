@@ -131,6 +131,7 @@ export const v3SwapExactInputSingle = async (input: {
   amountIn: bigint;
   amountOutMinimum: bigint;
   recipient: `0x${string}`;
+  from?: `0x${string}`;
   feeTier?: number;
   simulate?: boolean;
 }) => {
@@ -153,9 +154,10 @@ export const v3SwapExactInputSingle = async (input: {
           sqrtPriceLimitX96: 0n
         }
       ],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from ?? input.recipient
     });
-    return { data: { submitted: !input.simulate }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { submitted: !input.simulate, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };
 

@@ -2,7 +2,21 @@
 
 Fetch this first.
 
+## Read this before doing anything
+BuildAll is a **skills + documentation portal**, not a trading frontend.
+- Do **not** say "I can execute on BuildAll".
+- Do **not** look for swap/bridge buttons on BuildAll pages.
+- Use BuildAll docs to find command patterns, addresses, and workflow rules.
+- Then execute transactions through chain-skills commands (headless RPC signer or wallet flow), on behalf of the user.
+
+Agent behavior expectation:
+1. If this is a new session, start at `/onboarding/SKILL.md`.
+2. Collect missing execution inputs.
+3. Jump to the relevant skill pages (`dex`, `lending`, `bridging`, `playbooks`, `addresses`) to gather what you need.
+4. Simulate first, then execute transactions onchain.
+
 **Mandatory order:** open `/onboarding/SKILL.md` first and collect required user data in your first response.
+If user asks for execution, use docs as a reference map and then run chain-skills commands directly (don’t stop at documentation walkthrough).
 
 This index routes agents to focused markdown skill pages for major onchain actions.
 
@@ -60,6 +74,7 @@ chain-skills -c <command> -i '<json_input>'
 2. Confirm chain + contract addresses
 3. Enforce slippage for swaps (`amountOutMinimum`)
 4. Execute only after simulation is clean
+5. For EVM writes, use browser wallet path (`eth_sendTransaction` via injected provider) — do not treat BuildAll docs as the execution UI
 
 ## Response contract
 ```json

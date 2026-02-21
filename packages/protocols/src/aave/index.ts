@@ -175,19 +175,21 @@ export const lendingSupply = async (input: {
   asset: `0x${string}`;
   amount: bigint;
   onBehalfOf?: `0x${string}`;
+  from?: `0x${string}`;
   simulate?: boolean;
 }) => {
   const { ctx, pool } = await resolveMarketAddresses(input.chain);
-  const onBehalfOf = input.onBehalfOf ?? ctx.account?.address;
+  const onBehalfOf = input.onBehalfOf ?? input.from ?? ctx.account?.address;
   return withTiming(input.chain, ctx.chain.name, input.simulate ?? false, async () => {
     const tx = await sendContractTx(ctx, {
       address: pool,
       abi: poolAbi,
       functionName: 'supply',
       args: [input.asset, input.amount, onBehalfOf, 0],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from ?? onBehalfOf
     });
-    return { data: { supplied: true }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { supplied: true, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };
 
@@ -197,19 +199,21 @@ export const lendingBorrow = async (input: {
   amount: bigint;
   rateMode: number;
   onBehalfOf?: `0x${string}`;
+  from?: `0x${string}`;
   simulate?: boolean;
 }) => {
   const { ctx, pool } = await resolveMarketAddresses(input.chain);
-  const onBehalfOf = input.onBehalfOf ?? ctx.account?.address;
+  const onBehalfOf = input.onBehalfOf ?? input.from ?? ctx.account?.address;
   return withTiming(input.chain, ctx.chain.name, input.simulate ?? false, async () => {
     const tx = await sendContractTx(ctx, {
       address: pool,
       abi: poolAbi,
       functionName: 'borrow',
       args: [input.asset, input.amount, input.rateMode, 0, onBehalfOf],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from ?? onBehalfOf
     });
-    return { data: { borrowed: true }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { borrowed: true, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };
 
@@ -219,19 +223,21 @@ export const lendingRepay = async (input: {
   amount: bigint;
   rateMode: number;
   onBehalfOf?: `0x${string}`;
+  from?: `0x${string}`;
   simulate?: boolean;
 }) => {
   const { ctx, pool } = await resolveMarketAddresses(input.chain);
-  const onBehalfOf = input.onBehalfOf ?? ctx.account?.address;
+  const onBehalfOf = input.onBehalfOf ?? input.from ?? ctx.account?.address;
   return withTiming(input.chain, ctx.chain.name, input.simulate ?? false, async () => {
     const tx = await sendContractTx(ctx, {
       address: pool,
       abi: poolAbi,
       functionName: 'repay',
       args: [input.asset, input.amount, input.rateMode, onBehalfOf],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from ?? onBehalfOf
     });
-    return { data: { repaid: true }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { repaid: true, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };
 
@@ -240,18 +246,20 @@ export const lendingWithdraw = async (input: {
   asset: `0x${string}`;
   amount: bigint;
   to?: `0x${string}`;
+  from?: `0x${string}`;
   simulate?: boolean;
 }) => {
   const { ctx, pool } = await resolveMarketAddresses(input.chain);
-  const to = input.to ?? ctx.account?.address;
+  const to = input.to ?? input.from ?? ctx.account?.address;
   return withTiming(input.chain, ctx.chain.name, input.simulate ?? false, async () => {
     const tx = await sendContractTx(ctx, {
       address: pool,
       abi: poolAbi,
       functionName: 'withdraw',
       args: [input.asset, input.amount, to],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from ?? to
     });
-    return { data: { withdrawn: true }, txHash: tx.txHash, blockNumber: tx.blockNumber };
+    return { data: { withdrawn: true, browserRequest: tx.browserRequest }, txHash: tx.txHash, blockNumber: tx.blockNumber };
   });
 };

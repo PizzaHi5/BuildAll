@@ -49,6 +49,8 @@ export interface AppConfig {
   rpcTimeoutMs: number;
   retryCount: number;
   privateKey?: `0x${string}`;
+  enforceBrowserConfirmation: boolean;
+  allowUnsafeLocalSigning: boolean;
 }
 
 const envBigint = (v: string | undefined, fallback: bigint): bigint => {
@@ -59,6 +61,37 @@ const envBigint = (v: string | undefined, fallback: bigint): bigint => {
 const envNum = (v: string | undefined, fallback: number): number => {
   if (!v) return fallback;
   return Number(v);
+};
+
+const envBool = (v: string | undefined, fallback: boolean): boolean => {
+  if (!v) return fallback;
+  return ['1', 'true', 'yes', 'on'].includes(v.toLowerCase());
+};
+
+export const PRIMARY_BROWSER_WALLET_BY_CHAIN: Record<string, { wallet: string; browser: string }> = {
+  ethereum: { wallet: 'MetaMask', browser: 'default browser extension' },
+  base: { wallet: 'MetaMask', browser: 'default browser extension' },
+  arbitrum: { wallet: 'MetaMask', browser: 'default browser extension' },
+  optimism: { wallet: 'MetaMask', browser: 'default browser extension' },
+  polygon: { wallet: 'MetaMask', browser: 'default browser extension' },
+  solana: { wallet: 'Phantom', browser: 'default browser extension' },
+  near: { wallet: 'NEAR Wallet', browser: 'default browser popup/redirect' },
+  hedera: { wallet: 'HashPack', browser: 'default browser extension' },
+  injective: { wallet: 'Keplr', browser: 'default browser extension' }
+};
+
+export const resolvePrimaryWallet = (chain: string): { wallet: string; browser: string } =>
+  PRIMARY_BROWSER_WALLET_BY_CHAIN[chain] ?? { wallet: 'Browser wallet', browser: 'default browser' };
+
+export const browserWalletConfirmationPlan = (chains: string[]) => {
+  const uniqueChains = Array.from(new Set(chains.map((c) => c.toLowerCase()).filter(Boolean)));
+  const confirmations = uniqueChains.map((chain) => ({ chain, ...resolvePrimaryWallet(chain), confirmationRequired: true }));
+  return {
+    chains: uniqueChains,
+    confirmations,
+    totalConfirmations: confirmations.length,
+    multiWalletFlow: confirmations.length > 1
+  };
 };
 
 export const loadConfig = (): AppConfig => ({
@@ -108,7 +141,9 @@ export const loadConfig = (): AppConfig => ({
   oracleMaxStalenessSec: envNum(process.env.ORACLE_MAX_STALENESS_SEC, 3600),
   rpcTimeoutMs: envNum(process.env.RPC_TIMEOUT_MS, 15_000),
   retryCount: envNum(process.env.RPC_RETRY_COUNT, 2),
-  privateKey: process.env.EVM_PRIVATE_KEY as `0x${string}` | undefined
+  privateKey: process.env.EVM_PRIVATE_KEY as `0x${string}` | undefined,
+  enforceBrowserConfirmation: envBool(process.env.ENFORCE_BROWSER_CONFIRMATION, true),
+  allowUnsafeLocalSigning: envBool(process.env.ALLOW_UNSAFE_LOCAL_SIGNING, false)
 });
 
 export class SkillException extends Error {

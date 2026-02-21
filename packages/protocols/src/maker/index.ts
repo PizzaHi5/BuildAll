@@ -115,7 +115,7 @@ const ensureMainnet = (chain: string): void => {
   if (chain !== 'ethereum') throw new SkillException('UNSUPPORTED_CHAIN', 'Maker basic operations are mainnet-only in this release');
 };
 
-export const makerMintDaiBasic = async (input: { chain: string; vaultId: bigint; amount: bigint; simulate?: boolean }) => {
+export const makerMintDaiBasic = async (input: { chain: string; vaultId: bigint; amount: bigint; from?: `0x${string}`; simulate?: boolean }) => {
   ensureMainnet(input.chain);
   const ctx = createEvmContext(input.chain);
   const addresses = MAKER[input.chain as keyof typeof MAKER];
@@ -125,12 +125,14 @@ export const makerMintDaiBasic = async (input: { chain: string; vaultId: bigint;
       abi: cdpManagerAbi,
       functionName: 'frob',
       args: [input.vaultId, 0n, BigInt(input.amount)],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from
     });
 
     return {
       data: {
         submitted: !input.simulate,
+        browserRequest: tx.browserRequest,
         caveat: 'Maker debt unit conversions are simplified in this basic mode; validate production math with Vat/Jug before live use.'
       },
       txHash: tx.txHash,
@@ -139,7 +141,7 @@ export const makerMintDaiBasic = async (input: { chain: string; vaultId: bigint;
   });
 };
 
-export const makerRepayDaiBasic = async (input: { chain: string; vaultId: bigint; amount: bigint; simulate?: boolean }) => {
+export const makerRepayDaiBasic = async (input: { chain: string; vaultId: bigint; amount: bigint; from?: `0x${string}`; simulate?: boolean }) => {
   ensureMainnet(input.chain);
   const ctx = createEvmContext(input.chain);
   const addresses = MAKER[input.chain as keyof typeof MAKER];
@@ -149,12 +151,14 @@ export const makerRepayDaiBasic = async (input: { chain: string; vaultId: bigint
       abi: cdpManagerAbi,
       functionName: 'frob',
       args: [input.vaultId, 0n, -BigInt(input.amount)],
-      simulate: input.simulate
+      simulate: input.simulate,
+      from: input.from
     });
 
     return {
       data: {
         submitted: !input.simulate,
+        browserRequest: tx.browserRequest,
         caveat: 'Maker debt unit conversions are simplified in this basic mode; validate production math with Vat/Jug before live use.'
       },
       txHash: tx.txHash,
