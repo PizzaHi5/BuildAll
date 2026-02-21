@@ -6,114 +6,212 @@
   <title>BuildAll · Chain Skills Portal</title>
   <style>
     :root {
-      --bg:#070b18;
-      --panel:#0f1a36;
-      --panel2:#122247;
-      --line:#2f4f8a;
-      --text:#e8f1ff;
-      --muted:#a8c3eb;
-      --blue1:#9ad8ff;
-      --blue2:#63b4ff;
-      --blue3:#3689ff;
-      --blue4:#1d62dd;
+      --bg: #070b18;
+      --bg2: #0d1530;
+      --panel: #101b3b;
+      --panel-soft: #12244d;
+      --line: #2e4e8d;
+      --text: #e8f1ff;
+      --muted: #9eb8df;
+      --blue-1: #9ad8ff;
+      --blue-2: #63b4ff;
+      --blue-3: #3689ff;
+      --blue-4: #1d62dd;
+      --ok: #7ce2ba;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 20% -10%,#163b77 0%,#0b1330 35%,var(--bg) 75%);color:var(--text)}
-    .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    .hero{border:1px solid var(--line);background:linear-gradient(140deg,#102046,#0d1a37);border-radius:16px;padding:26px;position:relative;overflow:hidden}
-    .hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#8ad0ff22 1px,transparent 1px);background-size:8px 8px;mix-blend-mode:screen;pointer-events:none}
-    .title{font-size:42px;line-height:1.05;margin:0;font-weight:900;letter-spacing:.5px;text-shadow:0 0 0 transparent,0 2px 0 #0b1430}
-    .title span:nth-child(1){color:var(--blue1)}
-    .title span:nth-child(2){color:var(--blue2)}
-    .title span:nth-child(3){color:var(--blue3)}
-    .title span:nth-child(4){color:var(--blue4)}
-    .sub{margin:10px 0 0;color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:14px}
-    .card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:14px}
-    h2{margin:0 0 10px;color:#7ac4ff;font-size:18px}
-    ul{margin:0;padding-left:18px}
-    li{margin:6px 0}
-    a{color:#8bd0ff;text-decoration:none}
-    a:hover{text-decoration:underline}
-    code,pre{background:#0a1633;border-radius:8px;color:#d9e9ff}
-    pre{padding:10px;overflow:auto}
-    .chip{display:inline-block;padding:4px 8px;border:1px solid #3f6db5;border-radius:999px;color:#b6d6ff;font-size:12px;margin:4px 6px 0 0}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      background: radial-gradient(1200px 500px at 50% -10%, #1a3f7b 0%, var(--bg2) 45%, var(--bg) 80%);
+    }
+    .container { max-width: 1240px; margin: 0 auto; padding: 24px; }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      background: linear-gradient(145deg, #112349 0%, #0e1b39 100%);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 50px #00000040;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(#90d6ff28 1px, transparent 1px);
+      background-size: 8px 8px;
+      pointer-events: none;
+    }
+    h1 { margin: 0; font-size: 44px; letter-spacing: .4px; line-height: 1.05; font-weight: 900; }
+    h1 span:nth-child(1) { color: var(--blue-1); }
+    h1 span:nth-child(2) { color: var(--blue-2); }
+    h1 span:nth-child(3) { color: var(--blue-3); }
+    h1 span:nth-child(4) { color: var(--blue-4); }
+    .subtitle { color: var(--muted); margin-top: 10px; font-size: 16px; }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border: 1px solid #3b66b0;
+      border-radius: 999px;
+      color: #c9ddff;
+      text-decoration: none;
+      font-size: 13px;
+      background: #0f1d3f;
+    }
+    .pill:hover { border-color: #5e97f2; }
+
+    .section-title {
+      margin: 24px 0 10px;
+      color: #84c8ff;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(165deg, var(--panel), var(--panel-soft));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      min-height: 220px;
+    }
+
+    .chain-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .chain-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #8dd0ff;
+      margin: 0;
+    }
+
+    .status {
+      font-size: 11px;
+      color: var(--ok);
+      border: 1px solid #2d7f64;
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: #11352a;
+    }
+
+    ul { margin: 0; padding-left: 18px; }
+    li { margin: 6px 0; color: #d4e6ff; }
+    a { color: #95d7ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .footer-card {
+      margin-top: 14px;
+      background: #0e1a38;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <main class="container">
     <section class="hero">
-      <h1 class="title"><span>BUILD</span><span>ALL</span> <span>CHAIN</span> <span>SKILLS</span></h1>
-      <p class="sub">Human-friendly UI + agent-friendly markdown index for EVM + Solana execution flows.</p>
-      <div>
-        <span class="chip">Ethereum</span><span class="chip">Base</span><span class="chip">Arbitrum</span><span class="chip">Optimism</span><span class="chip">Polygon</span><span class="chip">Solana</span><span class="chip">Injective</span><span class="chip">NEAR</span><span class="chip">Hedera</span>
+      <h1><span>BUILD</span> <span>ALL</span> <span>CHAIN</span> <span>SKILLS</span></h1>
+      <p class="subtitle">Polished human-readable portal + agent-first markdown endpoints. Every chain below lists clear executable capabilities.</p>
+
+      <div class="quick-links">
+        <a class="pill" href="./SKILL.md">Master Index</a>
+        <a class="pill" href="./ship/SKILL.md">Execution Lifecycle</a>
+        <a class="pill" href="./preflight/SKILL.md">Bridge Preflight</a>
+        <a class="pill" href="./playbooks/SKILL.md">Intent Playbooks</a>
+        <a class="pill" href="./bridging/SKILL.md">Bridging Guide</a>
+        <a class="pill" href="./docs/bridge-registry/README.md">Verified Bridge Registry</a>
       </div>
     </section>
 
-    <div class="grid">
+    <h2 class="section-title">Chain Capabilities</h2>
+    <section class="grid">
       <article class="card">
-        <h2>Start Here</h2>
+        <div class="chain-head"><h3 class="chain-name">Ethereum / Base / Arbitrum / Optimism / Polygon</h3><span class="status">EVM</span></div>
         <ul>
-          <li><a href="./SKILL.md">/SKILL.md</a> (master index for agents)</li>
-          <li><a href="./ship/SKILL.md">/ship/SKILL.md</a> (execution lifecycle)</li>
-          <li><a href="./bridging/SKILL.md">/bridging/SKILL.md</a> (cross-chain + Coinbase fallback)</li>
-          <li><a href="./preflight/SKILL.md">/preflight/SKILL.md</a> (deterministic preflight function guide)</li>
-          <li><a href="./playbooks/SKILL.md">/playbooks/SKILL.md</a> (intent-to-command playbooks)</li>
-          <li><a href="./docs/bridge-registry/README.md">/docs/bridge-registry/README.md</a> (verified bridge targets)</li>
+          <li><a href="./erc20/SKILL.md">ERC-20</a> (balance, allowance, approve, transfer)</li>
+          <li><a href="./erc721/SKILL.md">ERC-721</a> (owner, balance, URI, transfer)</li>
+          <li><a href="./dex/SKILL.md">DEX</a> (Uniswap v3 quote/swap/pool state)</li>
+          <li><a href="./lending/SKILL.md">Lending</a> (Aave supply/borrow/repay/withdraw)</li>
+          <li><a href="./stablecoin/SKILL.md">Stablecoin</a> (Maker vault baseline)</li>
+          <li><a href="./oracle/SKILL.md">Oracle</a> (Chainlink feeds)</li>
+          <li><a href="./nft-marketplace/SKILL.md">NFT Marketplace</a> (OpenSea reads)</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>EVM Capabilities</h2>
+        <div class="chain-head"><h3 class="chain-name">Solana</h3><span class="status">SVM</span></div>
         <ul>
-          <li><a href="./erc20/SKILL.md">ERC-20</a></li>
-          <li><a href="./erc721/SKILL.md">ERC-721</a></li>
-          <li><a href="./dex/SKILL.md">DEX (Uniswap v3)</a></li>
-          <li><a href="./lending/SKILL.md">Lending (Aave)</a></li>
-          <li><a href="./stablecoin/SKILL.md">Stablecoin (Maker)</a></li>
-          <li><a href="./oracle/SKILL.md">Oracle (Chainlink)</a></li>
-          <li><a href="./nft-marketplace/SKILL.md">NFT Marketplace (OpenSea)</a></li>
+          <li><a href="./solana/SKILL.md">Core Transactions</a> (SOL + SPL + raw tx broadcast)</li>
+          <li><a href="./solana-serum/SKILL.md">Serum/OpenBook</a> (orderbook)</li>
+          <li><a href="./solana-raydium/SKILL.md">Raydium</a> (AMM)</li>
+          <li><a href="./solana-solend/SKILL.md">Solend</a> (lending)</li>
+          <li><a href="./solana-mango/SKILL.md">Mango</a> (derivatives)</li>
+          <li><a href="./solana-pyth/SKILL.md">Pyth</a> (oracle)</li>
+          <li><a href="./solana-magiceden/SKILL.md">Magic Eden</a> (NFT marketplace)</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>Solana Capabilities</h2>
+        <div class="chain-head"><h3 class="chain-name">Injective</h3><span class="status">Cosmos</span></div>
         <ul>
-          <li><a href="./solana/SKILL.md">Solana Core (send/receive)</a></li>
-          <li><a href="./solana-serum/SKILL.md">Serum/OpenBook (orderbook)</a></li>
-          <li><a href="./solana-raydium/SKILL.md">Raydium (AMM)</a></li>
-          <li><a href="./solana-solend/SKILL.md">Solend (lending)</a></li>
-          <li><a href="./solana-mango/SKILL.md">Mango (derivatives)</a></li>
-          <li><a href="./solana-pyth/SKILL.md">Pyth (oracle)</a></li>
-          <li><a href="./solana-magiceden/SKILL.md">Magic Eden (NFT)</a></li>
+          <li><a href="./injective/SKILL.md">Injective Protocol</a> (orderbook + derivatives)</li>
+          <li>Cosmos native token balances (`injective.token.balance`)</li>
+          <li><a href="./ibc/SKILL.md">IBC bridging</a> with denom trace + tx broadcast</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>New Chains</h2>
+        <div class="chain-head"><h3 class="chain-name">NEAR</h3><span class="status">NEAR VM</span></div>
         <ul>
-          <li><a href="./injective/SKILL.md">Injective: orderbook + derivatives + IBC</a></li>
-          <li><a href="./near/SKILL.md">NEAR: NEP-141 + Ref + Burrow + Paras</a></li>
-          <li><a href="./hedera/SKILL.md">Hedera: HTS + HCS + USDC + EVM</a></li>
-          <li><a href="./ibc/SKILL.md">IBC bridging (Cosmos interchain)</a></li>
+          <li><a href="./near/SKILL.md">NEP-141</a> token balance flow</li>
+          <li><a href="./near/SKILL.md">Ref Finance</a> AMM pool reads</li>
+          <li><a href="./near/SKILL.md">Burrow Finance</a> lending account reads</li>
+          <li><a href="./near/SKILL.md">Paras</a> NFT account reads</li>
+          <li>Signed tx broadcast (`near.tx.broadcast`)</li>
         </ul>
       </article>
 
       <article class="card">
-        <h2>Quick Command Pattern</h2>
-        <pre><code>chain-skills -c &lt;command&gt; -i '&lt;json&gt;'</code></pre>
-        <pre><code>{"command":"solana.transfer","input":{"to":"...","lamports":1000000,"simulate":true}}</code></pre>
+        <div class="chain-head"><h3 class="chain-name">Hedera</h3><span class="status">HBAR</span></div>
+        <ul>
+          <li><a href="./hedera/SKILL.md">HTS</a> token issuance/info patterns</li>
+          <li><a href="./hedera/SKILL.md">HCS</a> consensus topic logging reads</li>
+          <li><a href="./hedera/SKILL.md">USDC</a> fiat-backed stablecoin metadata path</li>
+          <li><a href="./hedera/SKILL.md">Hedera Smart Contract Service</a> (`hedera.evm.call/sendRaw`)</li>
+        </ul>
       </article>
-    </div>
+    </section>
 
-    <div class="card" style="margin-top:14px">
-      <h2>Reference Docs</h2>
+    <section class="footer-card">
+      <h2 class="section-title" style="margin-top:0">Reference Docs</h2>
       <ul>
         <li><a href="./docs/evm-transaction-playbook.md">EVM Transaction Playbook</a></li>
         <li><a href="./docs/protocol-coverage-matrix.md">Protocol Coverage Matrix</a></li>
         <li><a href="./docs/protocol-reference.md">Protocol Reference</a></li>
       </ul>
-    </div>
-  </div>
+    </section>
+  </main>
 </body>
 </html>
