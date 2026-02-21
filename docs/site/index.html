@@ -3,79 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BuildAll Chain Skills Portal</title>
+  <title>BuildAll · Chain Skills Portal</title>
   <style>
-    body { font-family: Inter, Arial, sans-serif; margin: 0; background:#0b1020; color:#e6edf3; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 28px; }
-    h1,h2,h3 { color:#7cc7ff; }
-    code, pre { background:#111a33; color:#d8e6ff; border-radius:8px; }
-    pre { padding:12px; overflow:auto; }
-    a { color:#7cc7ff; }
-    .card { background:#121a2f; border:1px solid #263256; border-radius:12px; padding:16px; margin:14px 0; }
-    .muted { color:#9db1cf; }
+    :root {
+      --bg:#070b18;
+      --panel:#0f1a36;
+      --panel2:#122247;
+      --line:#2f4f8a;
+      --text:#e8f1ff;
+      --muted:#a8c3eb;
+      --blue1:#9ad8ff;
+      --blue2:#63b4ff;
+      --blue3:#3689ff;
+      --blue4:#1d62dd;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 20% -10%,#163b77 0%,#0b1330 35%,var(--bg) 75%);color:var(--text)}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    .hero{border:1px solid var(--line);background:linear-gradient(140deg,#102046,#0d1a37);border-radius:16px;padding:26px;position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#8ad0ff22 1px,transparent 1px);background-size:8px 8px;mix-blend-mode:screen;pointer-events:none}
+    .title{font-size:42px;line-height:1.05;margin:0;font-weight:900;letter-spacing:.5px;text-shadow:0 0 0 transparent,0 2px 0 #0b1430}
+    .title span:nth-child(1){color:var(--blue1)}
+    .title span:nth-child(2){color:var(--blue2)}
+    .title span:nth-child(3){color:var(--blue3)}
+    .title span:nth-child(4){color:var(--blue4)}
+    .sub{margin:10px 0 0;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:14px}
+    .card{background:linear-gradient(160deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:12px;padding:14px}
+    h2{margin:0 0 10px;color:#7ac4ff;font-size:18px}
+    ul{margin:0;padding-left:18px}
+    li{margin:6px 0}
+    a{color:#8bd0ff;text-decoration:none}
+    a:hover{text-decoration:underline}
+    code,pre{background:#0a1633;border-radius:8px;color:#d9e9ff}
+    pre{padding:10px;overflow:auto}
+    .chip{display:inline-block;padding:4px 8px;border:1px solid #3f6db5;border-radius:999px;color:#b6d6ff;font-size:12px;margin:4px 6px 0 0}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>⚙️ BuildAll: Multi-Chain Skill Portal</h1>
-    <p class="muted">Fast reference for agents that need to perform major DeFi/NFT actions through a chat interface.</p>
+    <section class="hero">
+      <h1 class="title"><span>BUILD</span><span>ALL</span> <span>CHAIN</span> <span>SKILLS</span></h1>
+      <p class="sub">Human-friendly UI + agent-friendly markdown index for EVM + Solana execution flows.</p>
+      <div>
+        <span class="chip">Ethereum</span><span class="chip">Base</span><span class="chip">Arbitrum</span><span class="chip">Optimism</span><span class="chip">Polygon</span><span class="chip">Solana</span>
+      </div>
+    </section>
 
-    <div class="card">
-      <h2>Supported Chains</h2>
-      <p>Ethereum, Base, Arbitrum, Optimism, Polygon</p>
+    <div class="grid">
+      <article class="card">
+        <h2>Start Here</h2>
+        <ul>
+          <li><a href="./SKILL.md">/SKILL.md</a> (master index for agents)</li>
+          <li><a href="./ship/SKILL.md">/ship/SKILL.md</a> (execution lifecycle)</li>
+          <li><a href="./bridging/SKILL.md">/bridging/SKILL.md</a> (cross-chain + Coinbase fallback)</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>EVM Capabilities</h2>
+        <ul>
+          <li><a href="./erc20/SKILL.md">ERC-20</a></li>
+          <li><a href="./erc721/SKILL.md">ERC-721</a></li>
+          <li><a href="./dex/SKILL.md">DEX (Uniswap v3)</a></li>
+          <li><a href="./lending/SKILL.md">Lending (Aave)</a></li>
+          <li><a href="./stablecoin/SKILL.md">Stablecoin (Maker)</a></li>
+          <li><a href="./oracle/SKILL.md">Oracle (Chainlink)</a></li>
+          <li><a href="./nft-marketplace/SKILL.md">NFT Marketplace (OpenSea)</a></li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Solana Capabilities</h2>
+        <ul>
+          <li><a href="./solana/SKILL.md">Solana Core (send/receive)</a></li>
+          <li><a href="./solana-serum/SKILL.md">Serum/OpenBook (orderbook)</a></li>
+          <li><a href="./solana-raydium/SKILL.md">Raydium (AMM)</a></li>
+          <li><a href="./solana-solend/SKILL.md">Solend (lending)</a></li>
+          <li><a href="./solana-mango/SKILL.md">Mango (derivatives)</a></li>
+          <li><a href="./solana-pyth/SKILL.md">Pyth (oracle)</a></li>
+          <li><a href="./solana-magiceden/SKILL.md">Magic Eden (NFT)</a></li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Quick Command Pattern</h2>
+        <pre><code>chain-skills -c &lt;command&gt; -i '&lt;json&gt;'</code></pre>
+        <pre><code>{"command":"solana.transfer","input":{"to":"...","lamports":1000000,"simulate":true}}</code></pre>
+      </article>
     </div>
 
-    <div class="card">
-      <h2>Major Capabilities</h2>
-      <ul>
-        <li>ERC-20 (balance, allowance, approve, transfer)</li>
-        <li>ERC-721 (owner, balance, transfer, tokenURI)</li>
-        <li>DEX AMM (Uniswap v3 quote/swap/pool state)</li>
-        <li>Lending (Aave v3 health/market/supply/borrow/repay/withdraw)</li>
-        <li>Stablecoin (Maker basic vault operations on Ethereum)</li>
-        <li>Oracle (Chainlink pair + direct feed reads)</li>
-        <li>NFT Marketplace (OpenSea collection/listing/asset reads)</li>
-      </ul>
-    </div>
-
-    <div class="card">
-      <h2>Quick Start</h2>
-      <pre><code>pnpm install
-cp .env.example .env
-corepack pnpm typecheck
-corepack pnpm test
-corepack pnpm build</code></pre>
-      <p>Then run commands via CLI:</p>
-      <pre><code>chain-skills -c dex.quote -i '{"protocol":"v3","chain":"base","tokenIn":"0x...","tokenOut":"0x...","amountIn":"1000000","feeTier":500}'</code></pre>
-    </div>
-
-    <div class="card">
-      <h2>Transaction Safety Pattern</h2>
-      <ol>
-        <li>Run with <code>"simulate": true</code></li>
-        <li>Confirm addresses and chain</li>
-        <li>Set slippage guard (<code>amountOutMinimum</code>) for swaps</li>
-        <li>Send write transaction</li>
-      </ol>
-    </div>
-
-    <div class="card">
-      <h2>Agent Skill Markdown Index</h2>
-      <ul>
-        <li><a href="./SKILL.md">/SKILL.md (start here)</a></li>
-        <li><a href="./ship/SKILL.md">/ship/SKILL.md</a></li>
-        <li><a href="./erc20/SKILL.md">/erc20/SKILL.md</a></li>
-        <li><a href="./erc721/SKILL.md">/erc721/SKILL.md</a></li>
-        <li><a href="./dex/SKILL.md">/dex/SKILL.md</a></li>
-        <li><a href="./lending/SKILL.md">/lending/SKILL.md</a></li>
-        <li><a href="./stablecoin/SKILL.md">/stablecoin/SKILL.md</a></li>
-        <li><a href="./oracle/SKILL.md">/oracle/SKILL.md</a></li>
-        <li><a href="./nft-marketplace/SKILL.md">/nft-marketplace/SKILL.md</a></li>
-        <li><a href="./addresses/SKILL.md">/addresses/SKILL.md</a></li>
-      </ul>
-    </div>
-
-    <div class="card">
+    <div class="card" style="margin-top:14px">
       <h2>Reference Docs</h2>
       <ul>
         <li><a href="./docs/evm-transaction-playbook.md">EVM Transaction Playbook</a></li>

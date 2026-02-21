@@ -33,7 +33,18 @@ import {
   openseaFloor,
   openseaListings
 } from '../../protocols/src/index.js';
-import { hederaAccount, hederaToken, nearAccount, nearBalance, solanaBalance, solanaTx } from '../../chains/src/index.js';
+import {
+  hederaAccount,
+  hederaToken,
+  nearAccount,
+  nearBalance,
+  solanaBalance,
+  solanaSplBalance,
+  solanaSplTransfer,
+  solanaTransferSol,
+  solanaTx,
+  solanaSendRawTx
+} from '../../chains/src/index.js';
 
 export type CommandInput = Record<string, unknown>;
 
@@ -114,6 +125,14 @@ export const runSkillCommand = async (command: string, input: CommandInput): Pro
       return solanaBalance(input as never);
     case 'solana.tx':
       return solanaTx(input as never);
+    case 'solana.tx.sendRaw':
+      return solanaSendRawTx(input as never);
+    case 'solana.transfer':
+      return solanaTransferSol(input as never);
+    case 'solana.spl.balance':
+      return solanaSplBalance(input as never);
+    case 'solana.spl.transfer':
+      return solanaSplTransfer(input as never);
     case 'near.account':
       return nearAccount(input as never);
     case 'near.balance':

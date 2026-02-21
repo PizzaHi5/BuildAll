@@ -17,6 +17,14 @@ This index routes agents to focused markdown skill pages for major onchain actio
 - `https://pizzahi5.github.io/BuildAll/oracle/SKILL.md` — Oracle (Chainlink feeds)
 - `https://pizzahi5.github.io/BuildAll/nft-marketplace/SKILL.md` — NFT marketplace (OpenSea reads)
 - `https://pizzahi5.github.io/BuildAll/addresses/SKILL.md` — Canonical addresses/chains keys
+- `https://pizzahi5.github.io/BuildAll/solana/SKILL.md` — Solana core send/receive skills
+- `https://pizzahi5.github.io/BuildAll/solana-serum/SKILL.md` — Serum/OpenBook orderbook execution pattern
+- `https://pizzahi5.github.io/BuildAll/solana-raydium/SKILL.md` — Raydium AMM execution pattern
+- `https://pizzahi5.github.io/BuildAll/solana-solend/SKILL.md` — Solend lending execution pattern
+- `https://pizzahi5.github.io/BuildAll/solana-mango/SKILL.md` — Mango derivatives execution pattern
+- `https://pizzahi5.github.io/BuildAll/solana-pyth/SKILL.md` — Pyth oracle pattern
+- `https://pizzahi5.github.io/BuildAll/solana-magiceden/SKILL.md` — Magic Eden NFT pattern
+- `https://pizzahi5.github.io/BuildAll/bridging/SKILL.md` — Cross-chain bridge + Coinbase fallback playbook
 
 ## Chain keys
 - `ethereum`
@@ -24,6 +32,7 @@ This index routes agents to focused markdown skill pages for major onchain actio
 - `arbitrum`
 - `optimism`
 - `polygon`
+- `solana`
 
 ## Universal command format
 ```bash

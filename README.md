@@ -14,6 +14,7 @@ An agent can route user intent ("swap", "borrow", "check NFT owner", "get oracle
 - Arbitrum
 - Optimism
 - Polygon
+- Solana
 
 ### Supported major functionality
 - **Token standard (fungible):** ERC-20
@@ -23,6 +24,7 @@ An agent can route user intent ("swap", "borrow", "check NFT owner", "get oracle
 - **Stablecoin (crypto-collateralized):** Maker basic vault ops (Ethereum mainnet)
 - **Oracle:** Chainlink feeds
 - **NFT marketplace:** OpenSea read APIs
+- **Solana core tx:** SOL transfer, SPL transfer/balance, raw signed tx broadcast (protocol-agnostic)
 
 ---
 
@@ -130,6 +132,14 @@ Agent-first markdown entrypoints (ethskills-style):
 - `https://pizzahi5.github.io/BuildAll/oracle/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/nft-marketplace/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/addresses/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/solana/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/solana-serum/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/solana-raydium/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/solana-solend/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/solana-mango/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/solana-pyth/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/solana-magiceden/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/bridging/SKILL.md`
 
 ---
 
