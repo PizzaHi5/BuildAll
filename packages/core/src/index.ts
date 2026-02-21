@@ -77,7 +77,8 @@ export const PRIMARY_BROWSER_WALLET_BY_CHAIN: Record<string, { wallet: string; b
   solana: { wallet: 'Phantom', browser: 'default browser extension' },
   near: { wallet: 'NEAR Wallet', browser: 'default browser popup/redirect' },
   hedera: { wallet: 'HashPack', browser: 'default browser extension' },
-  injective: { wallet: 'Keplr', browser: 'default browser extension' }
+  injective: { wallet: 'Keplr', browser: 'default browser extension' },
+  algorand: { wallet: 'Pera Wallet', browser: 'Pera Web or mobile app' }
 };
 
 export const resolvePrimaryWallet = (chain: string): { wallet: string; browser: string } =>

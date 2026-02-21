@@ -45,6 +45,7 @@ This index routes agents to focused markdown skill pages for major onchain actio
 - `https://pizzahi5.github.io/BuildAll/injective/SKILL.md` — Injective DEX/derivatives/tokens/IBC
 - `https://pizzahi5.github.io/BuildAll/near/SKILL.md` — NEAR NEP-141 + Ref/Burrow/Paras patterns
 - `https://pizzahi5.github.io/BuildAll/hedera/SKILL.md` — Hedera HTS/HCS/USDC/HSC patterns
+- `https://pizzahi5.github.io/BuildAll/algorand/SKILL.md` — Algorand ALGO/ASA transfers + smart contract reads
 - `https://pizzahi5.github.io/BuildAll/ibc/SKILL.md` — Cosmos IBC bridging playbook
 - `https://pizzahi5.github.io/BuildAll/og/SKILL.md` — 0G decentralized AI model inference
 - `https://pizzahi5.github.io/BuildAll/preflight/SKILL.md` — Deterministic bridge preflight planner
@@ -62,6 +63,7 @@ This index routes agents to focused markdown skill pages for major onchain actio
 - `injective`
 - `near`
 - `hedera`
+- `algorand`
 - `0g`
 
 ## Universal command format
