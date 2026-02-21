@@ -16,4 +16,5 @@
 - `amountOutMinimum` is mandatory for safe execution.
 - Run quote before swap.
 - Uniswap API docs: https://api-docs.uniswap.org/introduction
+- Get API key: https://developers.uniswap.org/dashboard
 - Runtime key: `UNISWAP_API_KEY` (set in environment; do not hardcode in docs/repo).

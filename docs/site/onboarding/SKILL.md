@@ -32,6 +32,7 @@ Use this checklist and ask only missing items.
 - Wallet signing enabled in runtime (private key or external signer)
 - Gas token availability (ETH/MATIC/etc.)
 - If using Uniswap API-backed skills: `UNISWAP_API_KEY` configured in environment
+- Key creation portal: https://developers.uniswap.org/dashboard
 
 ### For Solana writes
 - `SOLANA_PRIVATE_KEY` configured (base58 or JSON array)
