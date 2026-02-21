@@ -40,3 +40,9 @@ Use these deterministic mappings from user intent -> command sequence.
 2. `bridge.validateAddress` for all bridge targets
 3. Execute direct bridge OR Coinbase fallback actionPlan
 4. Confirm destination balance/state
+
+## H) 0G inference route
+1. `og.models`
+2. Select model ID and build user/system prompts
+3. `og.inference`
+4. Return inference output + model metadata

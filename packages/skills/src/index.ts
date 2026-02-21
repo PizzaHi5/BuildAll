@@ -50,6 +50,8 @@ import {
   injectiveDerivativeMarkets,
   injectiveIbcDenomTrace,
   injectiveTxBroadcast,
+  ogModels,
+  ogInference,
   nearAccount,
   nearBalance,
   nearNep141Balance,
@@ -201,6 +203,11 @@ export const runSkillCommand = async (command: string, input: CommandInput): Pro
       return injectiveIbcDenomTrace(input as never);
     case 'injective.tx.broadcast':
       return injectiveTxBroadcast(input as never);
+
+    case 'og.models':
+      return ogModels();
+    case 'og.inference':
+      return ogInference(input as never);
 
     default:
       throw new SkillException('INVALID_INPUT', `Unknown command: ${command}`);

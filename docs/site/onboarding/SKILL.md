@@ -48,6 +48,11 @@ Use this checklist and ask only missing items.
 ### For Hedera EVM writes
 - Signed raw transaction hex
 
+### For 0G inference calls
+- `OG_COMPUTE_BASE_URL` configured
+- `OG_API_KEY` configured if endpoint requires authentication
+- Selected target model id (`og.models`)
+
 ### For Coinbase fallback routes
 - Coinbase Advanced Trade API key
 - Required scopes: **Trade, View, Transfer**
