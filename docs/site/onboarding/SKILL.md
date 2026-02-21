@@ -12,19 +12,22 @@ Use this checklist and ask only missing items.
    - Example: "swap USDC to ETH on Ethereum"
 2. **Source chain / destination chain**
    - e.g. `ethereum` -> `ethereum` (same-chain swap) or cross-chain route
-3. **Asset details**
+3. **RPC preference**
+   - user-supplied RPC URL(s) OR public RPC auto-selection
+   - if public RPC is chosen, resolve via `https://chainlist.org/rpcs.json` and select first active HTTP(S) endpoint per required chain (`rpc.resolve`)
+4. **Asset details**
    - source token symbol + contract/mint/denom
    - destination token symbol + contract/mint/denom
    - amount + units
-4. **Wallet addresses**
+5. **Wallet addresses**
    - source wallet
    - destination wallet (if different)
-5. **Execution mode**
+6. **Execution mode**
    - simulation only OR execute live
-6. **Slippage / risk settings**
+7. **Slippage / risk settings**
    - max slippage %
    - max fees (if user has limits)
-7. **Approval policy**
+8. **Approval policy**
    - approve exact amount or unlimited approval
 
 ## Conditionally required data
@@ -72,6 +75,7 @@ Example:
 - max slippage %
 - simulation-only or live execution
 - approval preference (exact or unlimited)
+- RPC preference: provide your own Ethereum RPC URL, or say 'use public RPC' and I’ll resolve the first active endpoint from chainlist.org
 Then I’ll run quote + simulation and return the plan before any live transaction."
 
 ## After intake is complete

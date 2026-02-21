@@ -8,11 +8,12 @@ Use these deterministic mappings from user intent -> command sequence.
 3. `token.transfer` (`simulate:false`)
 
 ## B) EVM swap (Uniswap)
-1. Prefer Uniswap skill/API path first (https://api-docs.uniswap.org/introduction)
-2. `dex.quote`
-3. `token.approve` (`simulate:true` then execute)
-4. `dex.swap` (`simulate:true` then execute)
-5. If API route metadata is available, enforce returned route/slippage constraints
+1. If user selected public RPC, run `rpc.resolve` for the execution chain
+2. Prefer Uniswap skill/API path first (https://api-docs.uniswap.org/introduction)
+3. `dex.quote`
+4. `token.approve` (`simulate:true` then execute)
+5. `dex.swap` (`simulate:true` then execute)
+6. If API route metadata is available, enforce returned route/slippage constraints
 
 ## C) Solana SPL transfer
 1. `solana.spl.balance`

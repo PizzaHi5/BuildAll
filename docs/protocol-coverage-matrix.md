@@ -22,3 +22,4 @@
 | NEAR | near.account/near.balance/nep141.balance/ref.pools/burrow.account/paras.tokens/tx.broadcast | ✅ Expanded adapter |
 | Hedera | hedera.account/token/hts.tokenInfo/hcs.messages/usdc.info/evm.call/evm.sendRaw | ✅ Expanded adapter |
 | 0G AI | og.models/og.inference | ✅ Added decentralized inference adapter |
+| RPC resolver | rpc.resolve (chainlist first-active RPC) | ✅ Added onboarding helper |

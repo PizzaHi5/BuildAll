@@ -52,6 +52,7 @@ import {
   injectiveTxBroadcast,
   ogModels,
   ogInference,
+  rpcResolve,
   nearAccount,
   nearBalance,
   nearNep141Balance,
@@ -208,6 +209,9 @@ export const runSkillCommand = async (command: string, input: CommandInput): Pro
       return ogModels();
     case 'og.inference':
       return ogInference(input as never);
+
+    case 'rpc.resolve':
+      return rpcResolve(input as never);
 
     default:
       throw new SkillException('INVALID_INPUT', `Unknown command: ${command}`);

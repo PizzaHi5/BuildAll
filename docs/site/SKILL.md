@@ -34,6 +34,7 @@ This index routes agents to focused markdown skill pages for major onchain actio
 - `https://pizzahi5.github.io/BuildAll/ibc/SKILL.md` — Cosmos IBC bridging playbook
 - `https://pizzahi5.github.io/BuildAll/og/SKILL.md` — 0G decentralized AI model inference
 - `https://pizzahi5.github.io/BuildAll/preflight/SKILL.md` — Deterministic bridge preflight planner
+- `https://pizzahi5.github.io/BuildAll/rpc/SKILL.md` — Public RPC resolution via Chainlist
 - `https://pizzahi5.github.io/BuildAll/playbooks/SKILL.md` — Intent -> command execution playbooks
 - `https://pizzahi5.github.io/BuildAll/docs/bridge-registry/README.md` — Verified bridge registry + validation commands
 
