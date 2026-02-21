@@ -31,7 +31,9 @@ import {
   openseaAsset,
   openseaCollection,
   openseaFloor,
-  openseaListings
+  openseaListings,
+  bridgeRegistry,
+  bridgeValidateAddress
 } from '../../protocols/src/index.js';
 import {
   hederaAccount,
@@ -120,6 +122,11 @@ export const runSkillCommand = async (command: string, input: CommandInput): Pro
       return openseaListings(input as never);
     case 'opensea.asset':
       return openseaAsset(input as never);
+
+    case 'bridge.registry':
+      return bridgeRegistry(input as never);
+    case 'bridge.validateAddress':
+      return bridgeValidateAddress(input as never);
 
     case 'solana.balance':
       return solanaBalance(input as never);

@@ -6,3 +6,4 @@ export * from './uniswap-v4/index.js';
 export * from './aave/index.js';
 export * from './maker/index.js';
 export * from './opensea/index.js';
+export * from './bridge/index.js';

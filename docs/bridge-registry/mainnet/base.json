@@ -1,0 +1,12 @@
+{
+  "chain": "base",
+  "wormhole": {
+    "core": "0xbebdb6C8ddC678FfA9f8748f85C815C556Dd8ac6",
+    "tokenBridge": "0x8d2de8d2f73F1F4cAB472AC9A881C9b123C79627",
+    "relayer": "0x706f82e9bb5b0813501714ab5974216704980e31",
+    "quoterRouter": "0x265fd0500a430d65d6D79Cd8707F24C048604658"
+  },
+  "sources": [
+    "https://wormhole.com/docs/products/reference/contract-addresses/"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "chain": "solana",
+  "wormhole": {
+    "core": "worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth",
+    "tokenBridge": "wormDTUJ6AWPNvk59vGQbDvGJmqbDTdgWgAqcLBCgUb"
+  },
+  "allbridge": {
+    "bridge": "bb1XfNoER5QC3rhVDaVz3AJp9oFKoHNHG6PHfZLcCjj",
+    "validator": "7DbBk8bTaw2gxgjjAQHAd4ZKaCYPbhFX63WjEtE5QD6G",
+    "notes": "Allbridge Classic Solana bridge/validator accounts from official docs."
+  },
+  "sources": [
+    "https://wormhole.com/docs/products/reference/contract-addresses/",
+    "https://raw.githubusercontent.com/allbridge-io/allbridge-contract-docs/master/README.md"
+  ]
+}

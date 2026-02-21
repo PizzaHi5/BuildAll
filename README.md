@@ -140,6 +140,7 @@ Agent-first markdown entrypoints (ethskills-style):
 - `https://pizzahi5.github.io/BuildAll/solana-pyth/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/solana-magiceden/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/bridging/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/docs/bridge-registry/README.md`
 
 ---
 

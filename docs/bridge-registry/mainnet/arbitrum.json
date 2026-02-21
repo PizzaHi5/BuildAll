@@ -1,0 +1,12 @@
+{
+  "chain": "arbitrum",
+  "wormhole": {
+    "core": "0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
+    "tokenBridge": "0x0b2402144Bb366A632D14B83F244D2e0e21bD39c",
+    "relayer": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+    "quoterRouter": "0x32eec14c963c23176bd8951f192292006756bDcC"
+  },
+  "sources": [
+    "https://wormhole.com/docs/products/reference/contract-addresses/"
+  ]
+}

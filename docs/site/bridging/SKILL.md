@@ -40,3 +40,7 @@ Ask user for Coinbase Advanced Trade API key with permissions:
 - Always show fees and expected slippage before execution.
 - Use test/small transfer first when bridging unfamiliar assets.
 - Never proceed with CEX trades/withdrawals without explicit user confirmation.
+- Before any bridge tx, validate target contract/account with:
+  - `bridge.registry`
+  - `bridge.validateAddress`
+- Reject any user-supplied bridge target that fails validation as unverified.

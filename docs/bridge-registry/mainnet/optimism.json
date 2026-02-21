@@ -1,0 +1,12 @@
+{
+  "chain": "optimism",
+  "wormhole": {
+    "core": "0xEe91C335eab126dF5fDB3797EA9d6aD93aeC9722",
+    "tokenBridge": "0x1D68124e65faFC907325e3EDbF8c4d84499DAa8b",
+    "relayer": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
+    "quoterRouter": "0xa3B6551cCbB5Fe1dc33b71EE3590B1Df22ae75B3"
+  },
+  "sources": [
+    "https://wormhole.com/docs/products/reference/contract-addresses/"
+  ]
+}

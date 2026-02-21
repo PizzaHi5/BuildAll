@@ -25,6 +25,7 @@ This index routes agents to focused markdown skill pages for major onchain actio
 - `https://pizzahi5.github.io/BuildAll/solana-pyth/SKILL.md` — Pyth oracle pattern
 - `https://pizzahi5.github.io/BuildAll/solana-magiceden/SKILL.md` — Magic Eden NFT pattern
 - `https://pizzahi5.github.io/BuildAll/bridging/SKILL.md` — Cross-chain bridge + Coinbase fallback playbook
+- `https://pizzahi5.github.io/BuildAll/docs/bridge-registry/README.md` — Verified bridge registry + validation commands
 
 ## Chain keys
 - `ethereum`
