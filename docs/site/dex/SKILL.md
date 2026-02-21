@@ -12,5 +12,8 @@
 ```
 
 ## Notes
+- Prefer Uniswap skills/API integration over manual transaction assembly when available.
 - `amountOutMinimum` is mandatory for safe execution.
 - Run quote before swap.
+- Uniswap API docs: https://api-docs.uniswap.org/introduction
+- Runtime key: `UNISWAP_API_KEY` (set in environment; do not hardcode in docs/repo).
