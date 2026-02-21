@@ -150,6 +150,8 @@ Agent-first markdown entrypoints (ethskills-style):
 - `https://pizzahi5.github.io/BuildAll/near/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/hedera/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/ibc/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/preflight/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/playbooks/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/docs/bridge-registry/README.md`
 
 ---
