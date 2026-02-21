@@ -32,6 +32,7 @@ In practice, this makes onchain tasks **faster, safer, and easier to automate** 
   - NEAR: **NEAR Wallet**
   - Hedera: **HashPack**
   - Injective: **Keplr**
+  - Algorand: **Pera Wallet / Defly**
 - Use `wallet.resolve` to fetch routing for a chain at runtime.
 - Use `wallet.route` for cross-chain flows (returns one confirmation per involved wallet/chain).
 - Use `wallet.evm.browserDispatch` to generate `window.ethereum.request(...)` payloads for MetaMask-style confirmation.
@@ -114,6 +115,7 @@ In short: this is an **AI primitive for cutting-edge crypto applications**.
 - Injective
 - NEAR
 - Hedera
+- Algorand
 - 0G
 
 ### Supported major functionality
@@ -128,6 +130,7 @@ In short: this is an **AI primitive for cutting-edge crypto applications**.
 - **Injective:** Cosmos-native balances, spot/derivatives market reads, IBC denom tracing, tx broadcast
 - **NEAR:** NEP-141 balances, Ref Finance/Burrow/Paras read flows, tx broadcast
 - **Hedera:** HTS/HCS read flows, USDC metadata, Hedera EVM call/raw send
+- **Algorand:** ALGO/ASA balance reads, ASA transfers + opt-in, app state reads, raw tx broadcast
 - **0G:** decentralized AI model discovery + inference calls (`og.models`, `og.inference`)
 
 ---
@@ -248,6 +251,7 @@ Agent-first markdown entrypoints (ethskills-style):
 - `https://pizzahi5.github.io/BuildAll/injective/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/near/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/hedera/SKILL.md`
+- `https://pizzahi5.github.io/BuildAll/algorand/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/ibc/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/og/SKILL.md`
 - `https://pizzahi5.github.io/BuildAll/preflight/SKILL.md`
